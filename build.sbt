@@ -21,6 +21,9 @@ lazy val reflect = crossProject(JSPlatform, JVMPlatform)
     scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
   )
   .jvmSettings(
+    // Macros
+    libraryDependencies += scalaOrganization.value % "scala-reflect" % scalaVersion.value,
+
     // Speed up compilation a bit. Our .java files do not need to see the .scala files.
     compileOrder := CompileOrder.JavaThenScala,
 
