@@ -8,6 +8,13 @@ import org.junit.Test
 
 import org.portablescala.reflect.annotation.EnableReflectiveInstantiation
 
+package subpackage {
+  @EnableReflectiveInstantiation
+  private class PrivateClassEnableDirect {
+    override def toString(): String = "instance of PrivateClassEnableDirect"
+  }
+}
+
 class ReflectTest {
   import ReflectTest.{Accessors, VC, ConstructorThrowsMessage, intercept}
 
@@ -62,6 +69,9 @@ class ReflectTest {
     Prefix + "ObjectWithThrowingCtor$"
   private final val NameClassWithThrowingCtor =
     Prefix + "ClassWithThrowingCtor"
+
+  private final val NamePrivateClassEnableDirect =
+    "org.portablescala.reflect.subpackage.PrivateClassEnableDirect"
 
   @Test def testClassRuntimeClass(): Unit = {
     def test(name: String): Unit = {
@@ -293,6 +303,17 @@ class ReflectTest {
       ctor.newInstance()
     }
     assertEquals(ConstructorThrowsMessage, e3.getMessage)
+  }
+
+  @Test def testPrivateClass(): Unit = {
+    // Private classes are discoverable
+
+    val optClassData = Reflect.lookupInstantiatableClass(NamePrivateClassEnableDirect)
+    assertTrue("1", optClassData.isDefined)
+    val classData = optClassData.get
+
+    val obj = classData.newInstance()
+    assertEquals("2", "instance of PrivateClassEnableDirect", obj.toString())
   }
 
   @Test def testInnerObjectWithEnableReflectiveInstantiation_issue_3228(): Unit = {
