@@ -225,10 +225,6 @@ class ReflectTest {
   }
 
   @Test def testLocalClass(): Unit = {
-    assumeFalse("Scala.js 1.0.0-M3 does not disable local classes",
-        1.0.toString() == "1" &&
-        System.getProperty("java.vm.version") == "1.0.0-M3")
-
     def assertCannotFind(c: Class[_]): Unit = {
       val fqcn = c.getName
       assertFalse(fqcn, Reflect.lookupInstantiatableClass(fqcn).isDefined)

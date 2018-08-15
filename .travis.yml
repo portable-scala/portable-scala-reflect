@@ -11,21 +11,13 @@ env:
   matrix:
     - SCALAJS_VERSION=
     - SCALAJS_VERSION=0.6.23
-    - SCALAJS_VERSION=1.0.0-M3
+    - SCALAJS_VERSION=1.0.0-M5
 
 matrix:
   exclude:
     # 2.10 is not supported in Scala.js 1.x
     - scala: 2.10.7
-      env: SCALAJS_VERSION=1.0.0-M3
-
-    # 2.13.0-M4 is not available in Scala.js 1.0.0-M3
-    - scala: 2.13.0-M4
-      env: SCALAJS_VERSION=1.0.0-M3
-
-    # Scala.js 1.0.0-M3 does not have the fix for #3227 yet
-    - scala: 2.11.12
-      env: SCALAJS_VERSION=1.0.0-M3
+      env: SCALAJS_VERSION=1.0.0-M5
 
 script:
   - |
