@@ -22,9 +22,9 @@ matrix:
 script:
   - |
     if [ "$SCALAJS_VERSION" = "" ]; then
-      PROJECT_NAME="reflectJVM"
+      PROJECT_NAME="portable-scala-reflectJVM"
     else
-      PROJECT_NAME="reflectJS"
+      PROJECT_NAME="portable-scala-reflectJS"
     fi
   - sbt ++$TRAVIS_SCALA_VERSION! $PROJECT_NAME/test
   - sbt ++$TRAVIS_SCALA_VERSION! $PROJECT_NAME/doc

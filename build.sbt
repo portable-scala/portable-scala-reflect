@@ -15,7 +15,7 @@ inThisBuild(Def.settings(
   )
 ))
 
-lazy val reflect = crossProject(JSPlatform, JVMPlatform)
+lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
   .in(file("."))
   .settings(
     scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
