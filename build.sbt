@@ -30,6 +30,3 @@ lazy val reflect = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   )
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
-
-lazy val reflectJVM = reflect.jvm
-lazy val reflectJS = reflect.js
