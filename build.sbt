@@ -5,6 +5,7 @@ inThisBuild(Def.settings(
   crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.6"),
   scalaVersion := crossScalaVersions.value.last,
   version := "0.1.0-SNAPSHOT",
+  organization := "org.portable-scala",
 
   scalacOptions ++= Seq(
     "-deprecation",
