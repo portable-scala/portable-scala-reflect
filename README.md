@@ -124,4 +124,4 @@ type ReflectiveAccess = {
 val result = obj.asInstanceOf[ReflectiveAccess].theMethod(42)
 ```
 
-If the name or signature of the method is not statically known, you are out of luck: there is no way to perform such a reflective call in Scala.js nor Scala Native, so `portable-scala-reflect` does provide any API for it.
+If the name or signature of the method is not statically known, you are out of luck: there is no way to perform such a reflective call in Scala.js nor Scala Native, so `portable-scala-reflect` does not provide any API for it.
