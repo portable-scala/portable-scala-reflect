@@ -319,10 +319,11 @@ class ReflectTest {
 
   @Test def testLocalClassWithReflectiveInstantiationInLambda_issue_3227(): Unit = {
     // Test that the presence of the following code does not prevent linking
-    { () =>
+    val f = { () =>
       @EnableReflectiveInstantiation
       class Foo
     }
+    identity(f) // discard f without compiler warning
   }
 }
 

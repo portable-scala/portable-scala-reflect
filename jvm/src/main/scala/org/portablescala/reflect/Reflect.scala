@@ -206,7 +206,7 @@ object Reflect {
       if (clazz.getAnnotation(classOf[EnableReflectiveInstantiation]) != null) {
         true
       } else {
-        (Iterator(clazz.getSuperclass) ++ Iterator(clazz.getInterfaces: _*))
+        (Iterator(clazz.getSuperclass) ++ clazz.getInterfaces.iterator)
           .filter(_ != null)
           .exists(c)
       }
