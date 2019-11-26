@@ -12,14 +12,14 @@ To be portable, only the subset of reflection capabilities that is implementable
 Add the following line to your (cross-)project's settings in `build.sbt`:
 
 ```scala
-libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "0.1.0"
+libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "0.1.1"
 ```
 
-`portable-scala-reflect` 0.1.0 supports:
+`portable-scala-reflect` 0.1.1 supports:
 
-* Scala 2.10.x, 2.11.x, 2.12.x and 2.13.0-M4
+* Scala 2.10.x, 2.11.x, 2.12.x and 2.13.x
 * Scala/JVM
-* Scala.js 0.6.x and 1.0.0-M5
+* Scala.js 0.6.x, 1.0.0-M8 and 1.0.0-RC1 (with further 1.x RCs and final expected)
 
 ## Usage
 
