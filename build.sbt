@@ -1,12 +1,12 @@
 // shadow sbt-scalajs' crossProject and CrossType until Scala.js 1.0.0 is released
 import sbtcrossproject.{crossProject, CrossType}
 
-val previousVersion = "0.1.0"
+val previousVersion = "0.1.1"
 
 inThisBuild(Def.settings(
   crossScalaVersions := Seq("2.12.10", "2.10.7", "2.11.12", "2.13.1"),
   scalaVersion := crossScalaVersions.value.head,
-  version := "0.1.1",
+  version := "0.1.2-SNAPSHOT",
   organization := "org.portable-scala",
 
   scalacOptions ++= Seq(
@@ -31,10 +31,8 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
   .settings(
     scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
 
-    mimaPreviousArtifacts ++= {
-      if (scalaJSVersion == "1.0.0-RC1") Set.empty
-      else Set(organization.value %%% moduleName.value % previousVersion)
-    },
+    mimaPreviousArtifacts +=
+      organization.value %%% moduleName.value % previousVersion,
 
     publishMavenStyle := true,
     publishTo := {
