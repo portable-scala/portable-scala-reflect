@@ -4,7 +4,7 @@ import sbtcrossproject.{crossProject, CrossType}
 val previousVersion = "0.1.0"
 
 inThisBuild(Def.settings(
-  crossScalaVersions := Seq("2.12.8", "2.10.7", "2.11.12", "2.13.0"),
+  crossScalaVersions := Seq("2.12.10", "2.10.7", "2.11.12", "2.13.1"),
   scalaVersion := crossScalaVersions.value.head,
   version := "0.1.1-SNAPSHOT",
   organization := "org.portable-scala",
@@ -31,8 +31,10 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
   .settings(
     scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
 
-    mimaPreviousArtifacts +=
-      organization.value %%% moduleName.value % previousVersion,
+    mimaPreviousArtifacts ++= {
+      if (scalaJSVersion == "1.0.0-RC1") Set.empty
+      else Set(organization.value %%% moduleName.value % previousVersion)
+    },
 
     publishMavenStyle := true,
     publishTo := {
