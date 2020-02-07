@@ -1,12 +1,12 @@
 // shadow sbt-scalajs' crossProject and CrossType until Scala.js 1.0.0 is released
 import sbtcrossproject.{crossProject, CrossType}
 
-val previousVersion = "0.1.1"
+val previousVersion = "1.0.0"
 
 inThisBuild(Def.settings(
   crossScalaVersions := Seq("2.12.10", "2.10.7", "2.11.12", "2.13.1"),
   scalaVersion := crossScalaVersions.value.head,
-  version := "1.0.0",
+  version := "1.0.1-SNAPSHOT",
   organization := "org.portable-scala",
 
   scalacOptions ++= Seq(
