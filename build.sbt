@@ -73,3 +73,9 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   )
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
+  .jsSettings(
+    crossScalaVersions ~= { prev =>
+      if (scalaJSVersion.startsWith("0.6.")) prev
+      else prev.filter(v => !v.startsWith("2.10."))
+    }
+  )
