@@ -35,7 +35,7 @@ class ReflectTest {
 
   private final val NameInnerClass = {
     Prefix + "ClassWithInnerClassWithEnableReflectiveInstantiation$" +
-    "InnerClassWithEnableReflectiveInstantiation"
+      "InnerClassWithEnableReflectiveInstantiation"
   }
 
   private final val NameClassEnableIndirect =
@@ -60,7 +60,7 @@ class ReflectTest {
 
   private final val NameInnerObject = {
     Prefix + "ClassWithInnerObjectWithEnableReflectiveInstantiation$" +
-    "InnerObjectWithEnableReflectiveInstantiation"
+      "InnerObjectWithEnableReflectiveInstantiation"
   }
 
   private final val NameObjectWithInitialization =
@@ -152,7 +152,7 @@ class ReflectTest {
 
   @Test def testClassNoArgCtorErrorCase(): Unit = {
     for (name <- Seq(NameClassEnableDirectNoZeroArgCtor,
-        NameClassEnableIndirectNoZeroArgCtor)) {
+                     NameClassEnableIndirectNoZeroArgCtor)) {
       val optClassData = Reflect.lookupInstantiatableClass(name)
       assertTrue(name, optClassData.isDefined)
       val classData = optClassData.get
@@ -162,8 +162,10 @@ class ReflectTest {
   }
 
   @Test def testClassCtorWithArgs(): Unit = {
-    for (name <- Seq(NameClassEnableDirect, NameClassEnableDirectNoZeroArgCtor,
-        NameClassEnableIndirect, NameClassEnableIndirectNoZeroArgCtor)) {
+    for (name <- Seq(NameClassEnableDirect,
+                     NameClassEnableDirectNoZeroArgCtor,
+                     NameClassEnableIndirect,
+                     NameClassEnableIndirectNoZeroArgCtor)) {
       val optClassData = Reflect.lookupInstantiatableClass(name)
       assertTrue(optClassData.isDefined)
       val classData = optClassData.get
@@ -202,7 +204,8 @@ class ReflectTest {
   }
 
   @Test def testInnerClass(): Unit = {
-    val outer = new ReflectTest.ClassWithInnerClassWithEnableReflectiveInstantiation(15)
+    val outer =
+      new ReflectTest.ClassWithInnerClassWithEnableReflectiveInstantiation(15)
 
     val optClassData = Reflect.lookupInstantiatableClass(NameInnerClass)
     assertTrue(optClassData.isDefined)
@@ -235,11 +238,11 @@ class ReflectTest {
     class LocalClassWithEnableReflectiveInstantiationInsideMethod
 
     assertCannotFind(
-        classOf[LocalClassWithEnableReflectiveInstantiationInsideMethod])
+      classOf[LocalClassWithEnableReflectiveInstantiationInsideMethod])
 
     assumeFalse(
-        "Scala/JVM 2.10.x does not correctly configure classes in lambdas as local",
-        TestPlatform.isScala210OnJVM)
+      "Scala/JVM 2.10.x does not correctly configure classes in lambdas as local",
+      TestPlatform.isScala210OnJVM)
 
     // In a lambda whose owner is ultimately the constructor of the class
     assertCannotFind(classInsideLambdaInsideCtor())
@@ -250,7 +253,8 @@ class ReflectTest {
       class LocalClassWithEnableReflectiveInstantiationInsideLambdaInsideMethod
 
       assertCannotFind(
-          classOf[LocalClassWithEnableReflectiveInstantiationInsideLambdaInsideMethod])
+        classOf[
+          LocalClassWithEnableReflectiveInstantiationInsideLambdaInsideMethod])
     }
     f()
   }
@@ -304,7 +308,8 @@ class ReflectTest {
   @Test def testPrivateClass(): Unit = {
     // Private classes are discoverable
 
-    val optClassData = Reflect.lookupInstantiatableClass(NamePrivateClassEnableDirect)
+    val optClassData =
+      Reflect.lookupInstantiatableClass(NamePrivateClassEnableDirect)
     assertTrue("1", optClassData.isDefined)
     val classData = optClassData.get
 
@@ -312,12 +317,14 @@ class ReflectTest {
     assertEquals("2", "instance of PrivateClassEnableDirect", obj.toString())
   }
 
-  @Test def testInnerObjectWithEnableReflectiveInstantiation_issue_3228(): Unit = {
+  @Test def testInnerObjectWithEnableReflectiveInstantiation_issue_3228()
+    : Unit = {
     assertFalse(Reflect.lookupLoadableModuleClass(NameInnerObject).isDefined)
     assertFalse(Reflect.lookupInstantiatableClass(NameInnerObject).isDefined)
   }
 
-  @Test def testLocalClassWithReflectiveInstantiationInLambda_issue_3227(): Unit = {
+  @Test def testLocalClassWithReflectiveInstantiationInLambda_issue_3227()
+    : Unit = {
     // Test that the presence of the following code does not prevent linking
     val f = { () =>
       @EnableReflectiveInstantiation
@@ -330,7 +337,7 @@ class ReflectTest {
 object ReflectTest {
   private final val ConstructorThrowsMessage = "constructor throws"
 
-  def intercept[T <: Throwable : ClassTag](body: => Unit): T = {
+  def intercept[T <: Throwable: ClassTag](body: => Unit): T = {
     try {
       body
       throw new AssertionError("no exception was thrown")
@@ -417,7 +424,8 @@ object ReflectTest {
   trait EnablingTrait
 
   class ClassEnableIndirect(val x: Int, val y: String)
-      extends EnablingTrait with Accessors {
+      extends EnablingTrait
+      with Accessors {
 
     def this(x: Int) = this(x, "ClassEnableIndirect")
     def this() = this(-1)
@@ -428,7 +436,8 @@ object ReflectTest {
   }
 
   class ClassEnableIndirectNoZeroArgCtor(val x: Int, val y: String)
-      extends EnablingTrait with Accessors {
+      extends EnablingTrait
+      with Accessors {
     def this(x: Int) = this(x, "ClassEnableIndirectNoZeroArgCtor")
     def this(vc: VC) = this(vc.self.toInt * 2)
 
@@ -444,7 +453,8 @@ object ReflectTest {
   trait TraitEnableIndirect extends EnablingTrait with Accessors
 
   abstract class AbstractClassEnableIndirect(val x: Int, val y: String)
-      extends EnablingTrait with Accessors {
+      extends EnablingTrait
+      with Accessors {
 
     def this(x: Int) = this(x, "AbstractClassEnableIndirect")
     def this() = this(-1)
@@ -454,9 +464,10 @@ object ReflectTest {
     private def this(d: Double) = this(d.toInt)
   }
 
-  class ClassNoPublicConstructorEnableIndirect private (
-      val x: Int, val y: String)
-      extends EnablingTrait with Accessors {
+  class ClassNoPublicConstructorEnableIndirect private (val x: Int,
+                                                        val y: String)
+      extends EnablingTrait
+      with Accessors {
 
     //protected def this(y: String) = this(-5, y)
   }

@@ -26,7 +26,8 @@ inThisBuild(Def.settings(
     Some("scm:git:git@github.com:portable-scala/portable-scala-reflect.git"))),
 ))
 
-lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
+lazy val `portable-scala-reflect` =
+    crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .in(file("."))
   .settings(
     scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
@@ -78,4 +79,11 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
       if (scalaJSVersion.startsWith("0.6.")) prev
       else prev.filter(v => !v.startsWith("2.10."))
     }
+  )
+  .nativeSettings(
+    crossScalaVersions := Seq("2.11.12"),
+    scalaVersion := "2.11.12",
+    libraryDependencies ++= Seq(
+      "org.scala-native" %%% "test-interface" % nativeVersion
+    )
   )
