@@ -65,7 +65,7 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
   )
   .jvmSettings(
     // Macros
-    libraryDependencies += scalaOrganization.value % "scala-reflect" % scalaVersion.value,
+    libraryDependencies += scalaOrganization.value % "scala-reflect" % scalaVersion.value % Provided,
 
     // Speed up compilation a bit. Our .java files do not need to see the .scala files.
     compileOrder := CompileOrder.JavaThenScala,
