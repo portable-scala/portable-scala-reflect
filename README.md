@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/portable-scala/portable-scala-reflect.svg?branch=master)](https://travis-ci.org/portable-scala/portable-scala-reflect)
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-0.6.29.svg)](https://www.scala-js.org/)
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.0.0.svg)](https://www.scala-js.org)
+[![Scaladoc](https://javadoc-badge.appspot.com/org.portable-scala/portable-scala-reflect_2.12.svg?label=scaladoc)](https://javadoc.io/doc/org.portable-scala/portable-scala-reflect_2.12/latest/org/portablescala/reflect/index.html)
 
 The various platforms supported by Scala (JVM, JavaScript and Native) have varying support for run-time reflection.
 Even the subset of functionality that is supported across the platforms is exposed through different APIs.
