@@ -4,7 +4,7 @@ import sbtcrossproject.{crossProject, CrossType}
 val previousVersion = "1.0.0"
 
 inThisBuild(Def.settings(
-  crossScalaVersions := Seq("2.12.10", "2.10.7", "2.11.12", "2.13.1"),
+  crossScalaVersions := Seq("2.13.4", "2.12.13", "2.11.12", "2.10.7"),
   scalaVersion := crossScalaVersions.value.head,
   version := "1.0.1-SNAPSHOT",
   organization := "org.portable-scala",
