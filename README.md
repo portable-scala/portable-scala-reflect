@@ -25,6 +25,7 @@ libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.0.
 * Scala 2.11.x, 2.12.x and 2.13.x
 * Scala/JVM
 * Scala.js 0.6.x and 1.x
+* Scala Native 0.4.0
 
 ## Usage
 
