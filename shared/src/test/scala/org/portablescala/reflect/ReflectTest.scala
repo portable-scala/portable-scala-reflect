@@ -237,10 +237,6 @@ class ReflectTest {
     assertCannotFind(
         classOf[LocalClassWithEnableReflectiveInstantiationInsideMethod])
 
-    assumeFalse(
-        "Scala/JVM 2.10.x does not correctly configure classes in lambdas as local",
-        TestPlatform.isScala210OnJVM)
-
     // In a lambda whose owner is ultimately the constructor of the class
     assertCannotFind(classInsideLambdaInsideCtor())
 
