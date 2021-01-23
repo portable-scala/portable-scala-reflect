@@ -14,17 +14,9 @@ env:
     - SCALANATIVE_VERSION=0.4.0
 
 script:
-  - |
-    if [ "$SCALAJS_VERSION" = "" ]; then
-      PROJECT_NAME="portable-scala-reflectJVM"
-    elif [ "$SCALAJS_VERSION" != "" ]; then
-      PROJECT_NAME="portable-scala-reflectJS"
-    elif [ "$SCALANATIVE_VERSION" != "" ]; then
-      PROJECT_NAME="portable-scala-reflectNative"
-    fi
-  - sbt ++$TRAVIS_SCALA_VERSION! ${PROJECT_NAME}/test
-  - sbt ++$TRAVIS_SCALA_VERSION! ${PROJECT_NAME}/doc
-  - sbt ++$TRAVIS_SCALA_VERSION! ${PROJECT_NAME}/mimaReportBinaryIssues
+  - sbt ++$TRAVIS_SCALA_VERSION! test
+  - sbt ++$TRAVIS_SCALA_VERSION! /doc
+  - sbt ++$TRAVIS_SCALA_VERSION! /mimaReportBinaryIssues
 
 before_cache:
   - find $HOME/.sbt -name "*.lock" | xargs rm
