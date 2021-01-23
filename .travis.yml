@@ -22,9 +22,9 @@ script:
     elif [ "$SCALANATIVE_VERSION" != "" ]; then
       PROJECT_NAME="portable-scala-reflectNative"
     fi
-  - sbt ++$TRAVIS_SCALA_VERSION! $PROJECT_NAME/test
-  - sbt ++$TRAVIS_SCALA_VERSION! $PROJECT_NAME/doc
-  - sbt ++$TRAVIS_SCALA_VERSION! $PROJECT_NAME/mimaReportBinaryIssues
+  - sbt ++$TRAVIS_SCALA_VERSION! ${PROJECT_NAME}/test
+  - sbt ++$TRAVIS_SCALA_VERSION! ${PROJECT_NAME}/doc
+  - sbt ++$TRAVIS_SCALA_VERSION! ${PROJECT_NAME}/mimaReportBinaryIssues
 
 before_cache:
   - find $HOME/.sbt -name "*.lock" | xargs rm
