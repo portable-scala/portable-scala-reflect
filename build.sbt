@@ -80,5 +80,6 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform,
     libraryDependencies +=
       "org.scala-native" %%% "junit-runtime" % "0.4.0" % "test",
     addCompilerPlugin(
-      "org.scala-native" % "junit-plugin" % "0.4.0" cross CrossVersion.full)
+      "org.scala-native" % "junit-plugin" % "0.4.0" cross CrossVersion.full),
+    mimaPreviousArtifacts += Set.empty // SN just added, no previous artifact
   )
