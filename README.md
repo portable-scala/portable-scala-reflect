@@ -22,7 +22,7 @@ libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.0.
 
 `portable-scala-reflect` 1.0.0 supports:
 
-* Scala 2.10.x, 2.11.x, 2.12.x and 2.13.x
+* Scala 2.11.x, 2.12.x and 2.13.x
 * Scala/JVM
 * Scala.js 0.6.x and 1.x
 

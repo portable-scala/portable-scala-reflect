@@ -4,9 +4,9 @@ import sbtcrossproject.{crossProject, CrossType}
 val previousVersion = "1.0.0"
 
 inThisBuild(Def.settings(
-  crossScalaVersions := Seq("2.12.10", "2.10.7", "2.11.12", "2.13.1"),
+  crossScalaVersions := Seq("2.12.10", "2.11.12", "2.13.1"),
   scalaVersion := crossScalaVersions.value.head,
-  version := "1.0.1-SNAPSHOT",
+  version := "1.1.0-SNAPSHOT",
   organization := "org.portable-scala",
 
   scalacOptions ++= Seq(
@@ -73,9 +73,3 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   )
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
-  .jsSettings(
-    crossScalaVersions ~= { prev =>
-      if (scalaJSVersion.startsWith("0.6.")) prev
-      else prev.filter(v => !v.startsWith("2.10."))
-    }
-  )
