@@ -26,7 +26,7 @@ inThisBuild(Def.settings(
     Some("scm:git:git@github.com:portable-scala/portable-scala-reflect.git"))),
 ))
 
-lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
+lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .in(file("."))
   .settings(
     scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
@@ -73,3 +73,10 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   )
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
+  .nativeSettings(
+    libraryDependencies +=
+      "org.scala-native" %%% "junit-runtime" % "0.4.0" % "test",
+    addCompilerPlugin(
+      "org.scala-native" % "junit-plugin" % "0.4.0" cross CrossVersion.full),
+    mimaPreviousArtifacts := Set.empty, // SN just added, no previous artifact
+  )
