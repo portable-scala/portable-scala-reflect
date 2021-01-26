@@ -6,7 +6,7 @@ val previousVersion = "1.0.0"
 inThisBuild(Def.settings(
   crossScalaVersions := Seq("2.12.13", "2.11.12", "2.13.4"),
   scalaVersion := crossScalaVersions.value.head,
-  version := "1.1.0-SNAPSHOT",
+  version := "1.1.0",
   organization := "org.portable-scala",
 
   scalacOptions ++= Seq(

@@ -1,7 +1,7 @@
 # portable-scala-reflect: platform-agnostic reflection for Scala
 
 [![Build Status](https://travis-ci.org/portable-scala/portable-scala-reflect.svg?branch=master)](https://travis-ci.org/portable-scala/portable-scala-reflect)
-[![Scala.js](https://www.scala-js.org/assets/badges/scalajs-0.6.33.svg)](https://www.scala-js.org/)
+[![Scala.js](https://www.scala-js.org/assets/badges/scalajs-0.6.29.svg)](https://www.scala-js.org/)
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-1.0.0.svg)](https://www.scala-js.org)
 [![Scaladoc](https://javadoc-badge.appspot.com/org.portable-scala/portable-scala-reflect_2.12.svg?label=scaladoc)](https://javadoc.io/doc/org.portable-scala/portable-scala-reflect_2.12/latest/org/portablescala/reflect/index.html)
 
@@ -9,7 +9,7 @@ The various platforms supported by Scala (JVM, JavaScript and Native) have varyi
 Even the subset of functionality that is supported across the platforms is exposed through different APIs.
 
 This library exposes a unified, portable API for run-time reflection in Scala.
-It currently supports Scala/JVM and Scala.js, but will eventually support Scala Native as well (currently blocked on [scala-native#1279](https://github.com/scala-native/scala-native/issues/1279)).
+It supports Scala/JVM, Scala.js and Scala Native.
 To be portable, only the subset of reflection capabilities that is implementable across all platforms is exposed.
 
 ## Setup
@@ -17,10 +17,10 @@ To be portable, only the subset of reflection capabilities that is implementable
 Add the following line to your (cross-)project's settings in `build.sbt`:
 
 ```scala
-libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.0.0"
+libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.0"
 ```
 
-`portable-scala-reflect` 1.0.0 supports:
+`portable-scala-reflect` 1.1.0 supports:
 
 * Scala 2.11.x, 2.12.x and 2.13.x
 * Scala/JVM
