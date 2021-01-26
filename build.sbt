@@ -1,12 +1,12 @@
 // shadow sbt-scalajs' crossProject and CrossType until Scala.js 1.0.0 is released
 import sbtcrossproject.{crossProject, CrossType}
 
-val previousVersion = "1.0.0"
+val previousVersion = "1.1.0"
 
 inThisBuild(Def.settings(
   crossScalaVersions := Seq("2.12.13", "2.11.12", "2.13.4"),
   scalaVersion := crossScalaVersions.value.head,
-  version := "1.1.0",
+  version := "1.1.1-SNAPSHOT",
   organization := "org.portable-scala",
 
   scalacOptions ++= Seq(
@@ -78,5 +78,4 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, Native
       "org.scala-native" %%% "junit-runtime" % "0.4.0" % "test",
     addCompilerPlugin(
       "org.scala-native" % "junit-plugin" % "0.4.0" cross CrossVersion.full),
-    mimaPreviousArtifacts := Set.empty, // SN just added, no previous artifact
   )
