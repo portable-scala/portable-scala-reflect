@@ -2,23 +2,24 @@ language: scala
 
 scala:
   - 2.11.12
-  - 2.12.10
-  - 2.13.1
+  - 2.12.13
+  - 2.13.4
 jdk:
   - openjdk8
 env:
   matrix:
-    - SCALAJS_VERSION=
-    - SCALAJS_VERSION=0.6.28
+    - SCALAJVM_VERSION=true
+    - SCALAJS_VERSION=0.6.33
     - SCALAJS_VERSION=1.0.0
+    - SCALANATIVE_VERSION=true
 
 script:
   - |
-    if [ "$SCALAJS_VERSION" = "" ]; then
-      PROJECT_NAME="portable-scala-reflectJVM"
-    else
-      PROJECT_NAME="portable-scala-reflectJS"
-    fi
+    [ -v SCALAJVM_VERSION ]    && PROJECT_PLATFORM="JVM"
+    [ -v SCALAJS_VERSION ]     && PROJECT_PLATFORM="JS"
+    [ -v SCALANATIVE_VERSION ] && PROJECT_PLATFORM="Native"
+    PROJECT_NAME="portable-scala-reflect${PROJECT_PLATFORM}"
+
   - sbt ++$TRAVIS_SCALA_VERSION! $PROJECT_NAME/test
   - sbt ++$TRAVIS_SCALA_VERSION! $PROJECT_NAME/doc
   - sbt ++$TRAVIS_SCALA_VERSION! $PROJECT_NAME/mimaReportBinaryIssues
