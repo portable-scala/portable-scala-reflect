@@ -1,33 +1,12 @@
 package org.portablescala.reflect
 
 import scala.language.experimental.macros
-
 import scala.collection.mutable
-
 import java.lang.reflect._
-
 import org.portablescala.reflect.annotation._
+import org.portablescala.reflect.internal.Macros
 
 object Reflect {
-  /** Magic to get cross-compiling access to `blackbox.Context` with a fallback
-   *  on `macros.Context`, without deprecation warning in any Scala version.
-   */
-  private object MacroCompat {
-    object Scope1 {
-      object blackbox
-    }
-    import Scope1._
-
-    object Scope2 {
-      import scala.reflect.macros._
-      object Inner {
-        import blackbox._
-        type BlackboxContext = Context
-      }
-    }
-  }
-
-  import MacroCompat.Scope2.Inner.BlackboxContext
 
   /** Reflectively looks up a loadable module class using the current class
    *  loader.
@@ -52,17 +31,7 @@ object Reflect {
    *    Fully-qualified name of the module class, including its trailing `$`
    */
   def lookupLoadableModuleClass(fqcn: String): Option[LoadableModuleClass] =
-    macro lookupLoadableModuleClass_impl
-
-  def lookupLoadableModuleClass_impl(
-      c: BlackboxContext { type PrefixType = Reflect.type })(
-      fqcn: c.Expr[String]): c.Expr[Option[LoadableModuleClass]] = {
-    import c.universe._
-    val loaderExpr = currentClassLoaderExpr(c)
-    reify {
-      c.prefix.splice.lookupLoadableModuleClass(fqcn.splice, loaderExpr.splice)
-    }
-  }
+    macro Macros.lookupLoadableModuleClass
 
   /** Reflectively looks up a loadable module class.
    *
@@ -111,17 +80,7 @@ object Reflect {
    *    Fully-qualified name of the class
    */
   def lookupInstantiatableClass(fqcn: String): Option[InstantiatableClass] =
-    macro lookupInstantiatableClass_impl
-
-  def lookupInstantiatableClass_impl(
-      c: BlackboxContext { type PrefixType = Reflect.type })(
-      fqcn: c.Expr[String]): c.Expr[Option[InstantiatableClass]] = {
-    import c.universe._
-    val loaderExpr = currentClassLoaderExpr(c)
-    reify {
-      c.prefix.splice.lookupInstantiatableClass(fqcn.splice, loaderExpr.splice)
-    }
-  }
+    macro Macros.lookupInstantiatableClass
 
   /** Reflectively looks up an instantiatable class.
    *
@@ -145,18 +104,6 @@ object Reflect {
   def lookupInstantiatableClass(fqcn: String,
       loader: ClassLoader): Option[InstantiatableClass] = {
     load(fqcn, loader).filter(isInstantiatableClass).map(new InstantiatableClass(_))
-  }
-
-  private def currentClassLoaderExpr(
-      c: BlackboxContext { type PrefixType = Reflect.type }): c.Expr[ClassLoader] = {
-    import c.universe._
-    val enclosingClassTree = c.reifyEnclosingRuntimeClass
-    if (enclosingClassTree.isEmpty)
-      c.abort(c.enclosingPosition, "call site does not have an enclosing class")
-    val enclosingClassExpr = c.Expr[java.lang.Class[_]](enclosingClassTree)
-    reify {
-      enclosingClassExpr.splice.getClassLoader()
-    }
   }
 
   private def isModuleClass(clazz: Class[_]): Boolean = {
