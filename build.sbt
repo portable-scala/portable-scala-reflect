@@ -2,12 +2,12 @@
 import com.typesafe.tools.mima.core._
 import sbtcrossproject.{crossProject, CrossType}
 
-val previousVersion = "1.1.0"
+val previousVersion = "1.1.1"
 
 inThisBuild(Def.settings(
   crossScalaVersions := Seq("2.12.13", "2.11.12", "2.13.4"),
   scalaVersion := crossScalaVersions.value.head,
-  version := "1.1.1",
+  version := "1.1.2-SNAPSHOT",
   organization := "org.portable-scala",
 
   scalacOptions ++= Seq(
@@ -34,12 +34,6 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, Native
 
     mimaPreviousArtifacts +=
       organization.value %%% moduleName.value % previousVersion,
-    mimaBinaryIssueFilters ++= List(
-      /* Macros were moved to `internal` package so that `Reflect`'s metadata doesn't get polluted by types from `scala-reflect` */
-      ProblemFilters.exclude[DirectMissingMethodProblem]("org.portablescala.reflect.Reflect.lookupInstantiatableClass_impl"),
-      ProblemFilters.exclude[DirectMissingMethodProblem]("org.portablescala.reflect.Reflect.lookupLoadableModuleClass_impl"),
-      ProblemFilters.exclude[MissingClassProblem]("org.portablescala.reflect.Reflect$MacroCompat$*"),
-    ),
 
     publishMavenStyle := true,
     publishTo := {
