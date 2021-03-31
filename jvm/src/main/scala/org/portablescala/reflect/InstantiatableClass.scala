@@ -1,5 +1,7 @@
 package org.portablescala.reflect
 
+import java.lang.reflect.InvocationTargetException
+
 /** A wrapper for a class that can be instantiated.
  *
  *  @param runtimeClass
@@ -18,9 +20,13 @@ final class InstantiatableClass private[reflect] (val runtimeClass: Class[_]) {
    */
   def newInstance(): Any = {
     try {
-      runtimeClass.newInstance()
+      runtimeClass.getDeclaredConstructor().newInstance()
     } catch {
-      case e: IllegalAccessException =>
+      case e: InvocationTargetException if e.getCause != null =>
+        throw e.getCause
+      case e: NoSuchMethodException =>
+        throw new InstantiationException(runtimeClass.getName).initCause(e)
+      case _: IllegalAccessException =>
         /* The constructor exists but is private; make it look like it does not
          * exist at all.
          */
