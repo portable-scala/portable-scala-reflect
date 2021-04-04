@@ -1,12 +1,11 @@
 package org.portablescala.reflect
 
-import scala.reflect.ClassTag
-
+import com.github.ghik.silencer.silent
 import org.junit.Assert._
-import org.junit.Assume._
 import org.junit.Test
-
 import org.portablescala.reflect.annotation.EnableReflectiveInstantiation
+
+import scala.reflect.ClassTag
 
 package subpackage {
   @EnableReflectiveInstantiation
@@ -15,6 +14,7 @@ package subpackage {
   }
 }
 
+@silent("never used")
 class ReflectTest {
   import ReflectTest.{Accessors, VC, ConstructorThrowsMessage, intercept}
 
@@ -35,7 +35,7 @@ class ReflectTest {
 
   private final val NameInnerClass = {
     Prefix + "ClassWithInnerClassWithEnableReflectiveInstantiation$" +
-    "InnerClassWithEnableReflectiveInstantiation"
+      "InnerClassWithEnableReflectiveInstantiation"
   }
 
   private final val NameClassEnableIndirect =
@@ -60,7 +60,7 @@ class ReflectTest {
 
   private final val NameInnerObject = {
     Prefix + "ClassWithInnerObjectWithEnableReflectiveInstantiation$" +
-    "InnerObjectWithEnableReflectiveInstantiation"
+      "InnerObjectWithEnableReflectiveInstantiation"
   }
 
   private final val NameObjectWithInitialization =
@@ -77,7 +77,7 @@ class ReflectTest {
     def test(name: String): Unit = {
       val optClassData = Reflect.lookupInstantiatableClass(name)
       assertTrue(name, optClassData.isDefined)
-      val classData = optClassData.get
+      val _ = optClassData.get
 
       val runtimeClass = optClassData.get.runtimeClass
       assertEquals(name, name, runtimeClass.getName)
@@ -93,7 +93,7 @@ class ReflectTest {
     def test(name: String): Unit = {
       val optClassData = Reflect.lookupLoadableModuleClass(name)
       assertTrue(name, optClassData.isDefined)
-      val classData = optClassData.get
+      val _ = optClassData.get
 
       val runtimeClass = optClassData.get.runtimeClass
       assertEquals(name, name, runtimeClass.getName)
@@ -151,8 +151,7 @@ class ReflectTest {
   }
 
   @Test def testClassNoArgCtorErrorCase(): Unit = {
-    for (name <- Seq(NameClassEnableDirectNoZeroArgCtor,
-        NameClassEnableIndirectNoZeroArgCtor)) {
+    for (name <- Seq(NameClassEnableDirectNoZeroArgCtor, NameClassEnableIndirectNoZeroArgCtor)) {
       val optClassData = Reflect.lookupInstantiatableClass(name)
       assertTrue(name, optClassData.isDefined)
       val classData = optClassData.get
@@ -163,7 +162,7 @@ class ReflectTest {
 
   @Test def testClassCtorWithArgs(): Unit = {
     for (name <- Seq(NameClassEnableDirect, NameClassEnableDirectNoZeroArgCtor,
-        NameClassEnableIndirect, NameClassEnableIndirectNoZeroArgCtor)) {
+            NameClassEnableIndirect, NameClassEnableIndirectNoZeroArgCtor)) {
       val optClassData = Reflect.lookupInstantiatableClass(name)
       assertTrue(optClassData.isDefined)
       val classData = optClassData.get
@@ -234,8 +233,7 @@ class ReflectTest {
     @EnableReflectiveInstantiation
     class LocalClassWithEnableReflectiveInstantiationInsideMethod
 
-    assertCannotFind(
-        classOf[LocalClassWithEnableReflectiveInstantiationInsideMethod])
+    assertCannotFind(classOf[LocalClassWithEnableReflectiveInstantiationInsideMethod])
 
     // In a lambda whose owner is ultimately the constructor of the class
     assertCannotFind(classInsideLambdaInsideCtor())
@@ -245,8 +243,7 @@ class ReflectTest {
       @EnableReflectiveInstantiation
       class LocalClassWithEnableReflectiveInstantiationInsideLambdaInsideMethod
 
-      assertCannotFind(
-          classOf[LocalClassWithEnableReflectiveInstantiationInsideLambdaInsideMethod])
+      assertCannotFind(classOf[LocalClassWithEnableReflectiveInstantiationInsideLambdaInsideMethod])
     }
     f()
   }
@@ -323,10 +320,11 @@ class ReflectTest {
   }
 }
 
+@silent("never used")
 object ReflectTest {
   private final val ConstructorThrowsMessage = "constructor throws"
 
-  def intercept[T <: Throwable : ClassTag](body: => Unit): T = {
+  def intercept[T <: Throwable: ClassTag](body: => Unit): T = {
     try {
       body
       throw new AssertionError("no exception was thrown")
@@ -361,8 +359,7 @@ object ReflectTest {
   }
 
   @EnableReflectiveInstantiation
-  class ClassEnableDirectNoZeroArgCtor(val x: Int, val y: String)
-      extends Accessors {
+  class ClassEnableDirectNoZeroArgCtor(val x: Int, val y: String) extends Accessors {
     def this(x: Int) = this(x, "ClassEnableDirectNoZeroArgCtor")
     def this(vc: VC) = this(vc.self.toInt * 2)
 
@@ -380,8 +377,7 @@ object ReflectTest {
   trait TraitEnableDirect extends Accessors
 
   @EnableReflectiveInstantiation
-  abstract class AbstractClassEnableDirect(val x: Int, val y: String)
-      extends Accessors {
+  abstract class AbstractClassEnableDirect(val x: Int, val y: String) extends Accessors {
 
     def this(x: Int) = this(x, "AbstractClassEnableDirect")
     def this() = this(-1)
@@ -392,16 +388,14 @@ object ReflectTest {
   }
 
   @EnableReflectiveInstantiation
-  class ClassNoPublicConstructorEnableDirect private (val x: Int, val y: String)
-      extends Accessors {
+  class ClassNoPublicConstructorEnableDirect private (val x: Int, val y: String) extends Accessors {
 
     //protected def this(y: String) = this(-5, y)
   }
 
   class ClassWithInnerClassWithEnableReflectiveInstantiation(_x: Int) {
     @EnableReflectiveInstantiation
-    class InnerClassWithEnableReflectiveInstantiation(_y: String)
-        extends Accessors {
+    class InnerClassWithEnableReflectiveInstantiation(_y: String) extends Accessors {
       val x = _x
       val y = _y
     }
@@ -412,8 +406,7 @@ object ReflectTest {
   @EnableReflectiveInstantiation
   trait EnablingTrait
 
-  class ClassEnableIndirect(val x: Int, val y: String)
-      extends EnablingTrait with Accessors {
+  class ClassEnableIndirect(val x: Int, val y: String) extends EnablingTrait with Accessors {
 
     def this(x: Int) = this(x, "ClassEnableIndirect")
     def this() = this(-1)
@@ -450,8 +443,7 @@ object ReflectTest {
     private def this(d: Double) = this(d.toInt)
   }
 
-  class ClassNoPublicConstructorEnableIndirect private (
-      val x: Int, val y: String)
+  class ClassNoPublicConstructorEnableIndirect private (val x: Int, val y: String)
       extends EnablingTrait with Accessors {
 
     //protected def this(y: String) = this(-5, y)
