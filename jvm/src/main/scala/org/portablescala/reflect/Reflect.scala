@@ -1,10 +1,11 @@
 package org.portablescala.reflect
 
-import scala.language.experimental.macros
-import scala.collection.mutable
-import java.lang.reflect._
 import org.portablescala.reflect.annotation._
 import org.portablescala.reflect.internal.Macros
+
+import java.lang.reflect._
+import scala.collection.mutable
+import scala.language.experimental.macros
 
 object Reflect {
 
@@ -52,8 +53,7 @@ object Reflect {
    *  @param loader
    *    Class loader to use to load the module class
    */
-  def lookupLoadableModuleClass(fqcn: String,
-      loader: ClassLoader): Option[LoadableModuleClass] = {
+  def lookupLoadableModuleClass(fqcn: String, loader: ClassLoader): Option[LoadableModuleClass] = {
     load(fqcn, loader).filter(isModuleClass).map(new LoadableModuleClass(_))
   }
 
@@ -101,8 +101,7 @@ object Reflect {
    *  @param loader
    *    Class loader to use to load the class
    */
-  def lookupInstantiatableClass(fqcn: String,
-      loader: ClassLoader): Option[InstantiatableClass] = {
+  def lookupInstantiatableClass(fqcn: String, loader: ClassLoader): Option[InstantiatableClass] = {
     load(fqcn, loader).filter(isInstantiatableClass).map(new InstantiatableClass(_))
   }
 
@@ -121,10 +120,10 @@ object Reflect {
      * inner class (non-local), both are the same non-null class.
      */
     def isLocalClass: Boolean =
-      clazz.getEnclosingClass() != clazz.getDeclaringClass()
+      clazz.getEnclosingClass != clazz.getDeclaringClass
 
-    (clazz.getModifiers() & Modifier.ABSTRACT) == 0 &&
-    clazz.getConstructors().length > 0 &&
+    (clazz.getModifiers & Modifier.ABSTRACT) == 0 &&
+    clazz.getConstructors.length > 0 &&
     !isModuleClass(clazz) &&
     !isLocalClass
   }
@@ -136,8 +135,7 @@ object Reflect {
        * `loadModule`.
        */
       val clazz = Class.forName(fqcn, false, loader)
-      if (inheritsAnnotation(clazz)) Some(clazz)
-      else None
+      Some(clazz).filter(inheritsAnnotation)
     } catch {
       case _: ClassNotFoundException => None
     }

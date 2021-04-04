@@ -1,13 +1,14 @@
 package org.portablescala.reflect
 
-import java.lang.reflect.Constructor
+import java.lang.reflect._
 
 /** A description of a constructor that can reflectively invoked. */
 final class InvokableConstructor private[reflect] (ctor: Constructor[_]) {
+
   /** The `Class[_]` objects representing the formal parameters of this
    *  constructor.
    */
-  val parameterTypes: List[Class[_]] = ctor.getParameterTypes().toList
+  val parameterTypes: List[Class[_]] = ctor.getParameterTypes.toList
 
   /** Invokes this constructor to instantiate a new object.
    *
@@ -22,12 +23,8 @@ final class InvokableConstructor private[reflect] (ctor: Constructor[_]) {
     try {
       ctor.newInstance(args.asInstanceOf[Seq[AnyRef]]: _*)
     } catch {
-      case e: java.lang.reflect.InvocationTargetException =>
-        val cause = e.getCause
-        if (cause == null)
-          throw e
-        else
-          throw cause
+      case e: InvocationTargetException if e.getCause != null =>
+        throw e.getCause
     }
   }
 }

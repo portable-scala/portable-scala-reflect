@@ -8,9 +8,10 @@ import java.lang.reflect.InvocationTargetException
  *    The `java.lang.Class[_]` representing the class.
  */
 final class InstantiatableClass private[reflect] (val runtimeClass: Class[_]) {
+
   /** A list of the public constructors declared in this class. */
   val declaredConstructors: List[InvokableConstructor] =
-    runtimeClass.getConstructors().map(new InvokableConstructor(_)).toList
+    runtimeClass.getConstructors.map(new InvokableConstructor(_)).toList
 
   /** Instantiates this class using its zero-argument constructor.
    *
@@ -26,12 +27,6 @@ final class InstantiatableClass private[reflect] (val runtimeClass: Class[_]) {
         throw e.getCause
       case e: NoSuchMethodException =>
         throw new InstantiationException(runtimeClass.getName).initCause(e)
-      case _: IllegalAccessException =>
-        /* The constructor exists but is private; make it look like it does not
-         * exist at all.
-         */
-        throw new InstantiationException(runtimeClass.getName).initCause(
-            new NoSuchMethodException(runtimeClass.getName + ".<init>()"))
     }
   }
 
@@ -42,8 +37,7 @@ final class InstantiatableClass private[reflect] (val runtimeClass: Class[_]) {
    */
   def getConstructor(parameterTypes: Class[_]*): Option[InvokableConstructor] = {
     try {
-      Some(new InvokableConstructor(
-          runtimeClass.getConstructor(parameterTypes: _*)))
+      Some(new InvokableConstructor(runtimeClass.getConstructor(parameterTypes: _*)))
     } catch {
       case _: NoSuchMethodException => None
     }

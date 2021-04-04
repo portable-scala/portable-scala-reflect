@@ -6,6 +6,7 @@ package org.portablescala.reflect
  *    The `java.lang.Class[_]` representing the module class.
  */
 final class LoadableModuleClass private[reflect] (val runtimeClass: Class[_]) {
+
   /** Loads the module instance and returns it.
    *
    *  If the underlying constructor throws an exception `e`, then `loadModule`
@@ -16,12 +17,8 @@ final class LoadableModuleClass private[reflect] (val runtimeClass: Class[_]) {
     try {
       runtimeClass.getField("MODULE$").get(null)
     } catch {
-      case e: java.lang.ExceptionInInitializerError =>
-        val cause = e.getCause
-        if (cause == null)
-          throw e
-        else
-          throw cause
+      case e: ExceptionInInitializerError if e.getCause != null =>
+        throw e.getCause
     }
   }
 }

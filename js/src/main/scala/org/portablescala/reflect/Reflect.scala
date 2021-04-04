@@ -1,8 +1,11 @@
 package org.portablescala.reflect
 
+import com.github.ghik.silencer.silent
+
 import scala.scalajs.reflect.{Reflect => SJSReflect}
 
 object Reflect {
+
   /** Reflectively looks up a loadable module class.
    *
    *  A module class is the technical term referring to the class of a Scala
@@ -34,10 +37,10 @@ object Reflect {
    *    Fully-qualified name of the module class, including its trailing `$`
    *
    *  @param loader
-   *    Ignored
+   *    Ignored, used in the JVM variant and we need to keep the API
    */
   def lookupLoadableModuleClass(fqcn: String,
-      loader: ClassLoader): Option[LoadableModuleClass] = {
+      @silent("never used") loader: ClassLoader): Option[LoadableModuleClass] = {
     lookupLoadableModuleClass(fqcn)
   }
 
@@ -72,10 +75,10 @@ object Reflect {
    *    Fully-qualified name of the class
    *
    *  @param loader
-   *    Ignored
+   *    Ignored, used in the JVM variant and we need to keep the API
    */
   def lookupInstantiatableClass(fqcn: String,
-      loader: ClassLoader): Option[InstantiatableClass] = {
+      @silent("never used") loader: ClassLoader): Option[InstantiatableClass] = {
     lookupInstantiatableClass(fqcn)
   }
 }

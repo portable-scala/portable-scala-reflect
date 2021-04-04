@@ -23,6 +23,8 @@ jobs:
         with:
           java-version: "adopt@1.8"
       - uses: coursier/cache-action@v5
+      - name: Formatting
+        run: sbt lint
       - name: Unit tests
         run: sbt "++${{ matrix.scalaversion }}" "${{ env.PROJECT_NAME }}/test"
       - name: Test generate documentation
