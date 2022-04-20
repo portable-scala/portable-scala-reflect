@@ -2,12 +2,12 @@
 import com.typesafe.tools.mima.core._
 import sbtcrossproject.{crossProject, CrossType}
 
-val previousVersion = "1.1.1"
+val previousVersion = "1.1.2"
 
 inThisBuild(Def.settings(
   crossScalaVersions := Seq("2.12.13", "2.11.12", "2.13.4"),
   scalaVersion := crossScalaVersions.value.head,
-  version := "1.1.2",
+  version := "1.1.3-SNAPSHOT",
   organization := "org.portable-scala",
 
   scalacOptions ++= Seq(
