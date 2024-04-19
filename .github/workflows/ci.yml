@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scalaversion: ["2.11.12", "2.12.13", "2.13.4"]
+        scalaversion: ["2.12.19", "2.13.13"]
         platform: ["JVM", "JS", "JS-0.6.x", "Native"]
     env:
       SCALAJS_VERSION: "${{ matrix.platform == 'JS-0.6.x' && '0.6.33' || '' }}"

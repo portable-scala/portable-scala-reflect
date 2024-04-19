@@ -5,7 +5,7 @@ import sbtcrossproject.{crossProject, CrossType}
 val previousVersion = "1.1.2"
 
 inThisBuild(Def.settings(
-  crossScalaVersions := Seq("2.12.13", "2.11.12", "2.13.4"),
+  crossScalaVersions := Seq("2.12.19", "2.13.13"),
   scalaVersion := crossScalaVersions.value.head,
   version := "1.1.3-SNAPSHOT",
   organization := "org.portable-scala",
@@ -76,7 +76,7 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, Native
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
   .nativeSettings(
     libraryDependencies +=
-      "org.scala-native" %%% "junit-runtime" % "0.4.0" % "test",
+      "org.scala-native" %%% "junit-runtime" % "0.5.1" % "test",
     addCompilerPlugin(
-      "org.scala-native" % "junit-plugin" % "0.4.0" cross CrossVersion.full),
+      "org.scala-native" % "junit-plugin" % "0.5.1" cross CrossVersion.full),
   )
