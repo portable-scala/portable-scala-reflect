@@ -13,10 +13,9 @@ jobs:
       fail-fast: false
       matrix:
         scalaversion: ["2.12.19", "2.13.13"]
-        platform: ["JVM", "JS", "JS-0.6.x", "Native"]
+        platform: ["JVM", "JS", "Native"]
     env:
-      SCALAJS_VERSION: "${{ matrix.platform == 'JS-0.6.x' && '0.6.33' || '' }}"
-      PROJECT_NAME: "portable-scala-reflect${{ matrix.platform == 'JS-0.6.x' && 'JS' || matrix.platform }}"
+      PROJECT_NAME: "portable-scala-reflect${{ matrix.platform }}"
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v10
