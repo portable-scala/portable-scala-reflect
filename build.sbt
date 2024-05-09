@@ -2,7 +2,7 @@
 import com.typesafe.tools.mima.core._
 import sbtcrossproject.{crossProject, CrossType}
 
-val previousVersion = "1.1.2"
+val previousVersion = "1.1.3"
 
 inThisBuild(Def.settings(
   crossScalaVersions := Seq("2.12.19", "2.13.13"),
@@ -30,11 +30,16 @@ inThisBuild(Def.settings(
 lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, NativePlatform)
   .in(file("."))
   .settings(
-    scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
-
-    mimaPreviousArtifacts +=
-      organization.value %%% moduleName.value % previousVersion,
-
+    Compile / doc /scalacOptions -= "-Xfatal-warnings",
+    mimaPreviousArtifacts := {
+      version.value match {
+        case v if v.startsWith("1.1.3") =>
+          // During migration to Scala Native 0.5.x, ignore the binary compatibility
+          Set.empty
+        case _ =>
+          Set(organization.value %%% moduleName.value % previousVersion)
+      }
+    },
     publishMavenStyle := true,
     publishTo := {
       val nexus = "https://oss.sonatype.org/"
