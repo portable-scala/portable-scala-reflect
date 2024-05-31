@@ -32,8 +32,14 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, Native
   .settings(
     scalacOptions in (Compile, doc) -= "-Xfatal-warnings",
 
-    mimaPreviousArtifacts +=
-      organization.value %%% moduleName.value % previousVersion,
+    mimaPreviousArtifacts ++= {
+      val isNewInThisRelease = System.getenv("SCALANATIVE_VERSION") == "0.5.2"
+      if (isNewInThisRelease)
+        Set.empty
+      else
+        Set(organization.value %%% moduleName.value % previousVersion)
+    },
+    mimaFailOnNoPrevious := false,
 
     publishMavenStyle := true,
     publishTo := {

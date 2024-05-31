@@ -14,9 +14,16 @@ jobs:
       matrix:
         scalaversion: ["2.11.12", "2.12.13", "2.13.4"]
         platform: ["JVM", "JS", "JS-0.6.x", "Native"]
+        include:
+          # Earliest Scala versions supported by Scala Native 0.5.x
+          - scalaversion: "2.12.14"
+            platform: "Native-0.5.x"
+          - scalaversion: "2.13.8"
+            platform: "Native-0.5.x"
     env:
       SCALAJS_VERSION: "${{ matrix.platform == 'JS-0.6.x' && '0.6.33' || '' }}"
-      PROJECT_NAME: "portable-scala-reflect${{ matrix.platform == 'JS-0.6.x' && 'JS' || matrix.platform }}"
+      SCALANATIVE_VERSION: "${{ matrix.platform == 'Native-0.5.x' && '0.5.2' || '' }}"
+      PROJECT_NAME: "portable-scala-reflect${{ matrix.platform == 'JS-0.6.x' && 'JS' || matrix.platform == 'Native-0.5.x' && 'Native' || matrix.platform }}"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v4
@@ -27,8 +34,8 @@ jobs:
           java-version: "adopt@1.8"
       - uses: coursier/cache-action@v5
       - name: Unit tests
-        run: sbt "++${{ matrix.scalaversion }}" "${{ env.PROJECT_NAME }}/test"
+        run: sbt "++${{ matrix.scalaversion }}!" "${{ env.PROJECT_NAME }}/test"
       - name: Test generate documentation
-        run: sbt "++${{ matrix.scalaversion }}" "${{ env.PROJECT_NAME }}/doc"
+        run: sbt "++${{ matrix.scalaversion }}!" "${{ env.PROJECT_NAME }}/doc"
       - name: MiMa
-        run: sbt "++${{ matrix.scalaversion }}" "${{ env.PROJECT_NAME }}/mimaReportBinaryIssues"
+        run: sbt "++${{ matrix.scalaversion }}!" "${{ env.PROJECT_NAME }}/mimaReportBinaryIssues"
