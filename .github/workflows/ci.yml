@@ -19,6 +19,9 @@ jobs:
       PROJECT_NAME: "portable-scala-reflect${{ matrix.platform == 'JS-0.6.x' && 'JS' || matrix.platform }}"
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.x'
       - uses: olafurpg/setup-scala@v10
         with:
           java-version: "adopt@1.8"
