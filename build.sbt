@@ -74,9 +74,4 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, Native
     libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
   )
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
-  .nativeSettings(
-    libraryDependencies +=
-      "org.scala-native" %%% "junit-runtime" % "0.4.0" % "test",
-    addCompilerPlugin(
-      "org.scala-native" % "junit-plugin" % "0.4.0" cross CrossVersion.full),
-  )
+  .nativeConfigure(_.enablePlugins(ScalaNativeJUnitPlugin))
