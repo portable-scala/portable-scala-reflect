@@ -75,3 +75,10 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, Native
   )
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
   .nativeConfigure(_.enablePlugins(ScalaNativeJUnitPlugin))
+  .nativeSettings(
+    /* Scala Native's runtime pulls in a newer scala-library (2.13.8 for 0.4.x,
+     * 2.13.14 for 0.5.x) than the oldest Scala versions we build with.
+     * Newer sbt versions reject this (SIP-51) unless explicitly allowed.
+     */
+    allowUnsafeScalaLibUpgrade := true,
+  )
