@@ -6,6 +6,7 @@ package org.portablescala.reflect
  *    The `java.lang.Class[_]` representing the module class.
  */
 final class LoadableModuleClass private[reflect] (val runtimeClass: Class[_]) {
+
   /** Loads the module instance and returns it.
    *
    *  If the underlying constructor throws an exception `e`, then `loadModule`

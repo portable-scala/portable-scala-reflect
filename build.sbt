@@ -11,20 +11,20 @@ inThisBuild(Def.settings(
   organization := "org.portable-scala",
 
   scalacOptions ++= Seq(
-    "-deprecation",
-    "-feature",
-    "-encoding",
-    "utf-8",
-    "-Xfatal-warnings",
+      "-deprecation",
+      "-feature",
+      "-encoding",
+      "utf-8",
+      "-Xfatal-warnings"
   ),
 
   homepage := Some(url("https://github.com/portable-scala/portable-scala-reflect")),
   licenses += ("BSD New",
-    url("https://github.com/portable-scala/portable-scala-reflect/blob/master/LICENSE")),
+      url("https://github.com/portable-scala/portable-scala-reflect/blob/master/LICENSE")),
   scmInfo := Some(ScmInfo(
-    url("https://github.com/portable-scala/portable-scala-reflect"),
-    "scm:git:git@github.com:portable-scala/portable-scala-reflect.git",
-    Some("scm:git:git@github.com:portable-scala/portable-scala-reflect.git"))),
+      url("https://github.com/portable-scala/portable-scala-reflect"),
+      "scm:git:git@github.com:portable-scala/portable-scala-reflect.git",
+      Some("scm:git:git@github.com:portable-scala/portable-scala-reflect.git")))
 ))
 
 lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, NativePlatform)
@@ -62,7 +62,7 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, Native
         </developer>
       </developers>
     ),
-    pomIncludeRepository := { _ => false },
+    pomIncludeRepository := { _ => false }
   )
   .jvmSettings(
     // Macros
@@ -71,7 +71,7 @@ lazy val `portable-scala-reflect` = crossProject(JSPlatform, JVMPlatform, Native
     // Speed up compilation a bit. Our .java files do not need to see the .scala files.
     compileOrder := CompileOrder.JavaThenScala,
 
-    libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test",
+    libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
   )
   .jsConfigure(_.enablePlugins(ScalaJSJUnitPlugin))
   .nativeConfigure(_.enablePlugins(ScalaNativeJUnitPlugin))

@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor
 
 /** A description of a constructor that can reflectively invoked. */
 final class InvokableConstructor private[reflect] (ctor: Constructor[_]) {
+
   /** The `Class[_]` objects representing the formal parameters of this
    *  constructor.
    */
