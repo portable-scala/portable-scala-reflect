@@ -26,11 +26,17 @@ jobs:
       matrix:
         scalaversion: ["2.11.12", "2.12.13", "2.13.4"]
         platform: ["JVM", "JS", "JS-0.6.x", "Native"]
+        exclude:
+          # Scala Native 0.4.x requires Scala 2.13.8+ on 2.13
+          - scalaversion: "2.13.4"
+            platform: "Native"
         include:
+          - scalaversion: "2.13.8"
+            platform: "Native"
           # Earliest Scala versions supported by Scala Native 0.5.x
           - scalaversion: "2.12.14"
             platform: "Native-0.5.x"
-          - scalaversion: "2.13.8"
+          - scalaversion: "2.13.14"
             platform: "Native-0.5.x"
     env:
       SCALAJS_VERSION: "${{ matrix.platform == 'JS-0.6.x' && '0.6.33' || '' }}"
