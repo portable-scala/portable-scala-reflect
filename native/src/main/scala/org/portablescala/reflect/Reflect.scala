@@ -3,6 +3,7 @@ package org.portablescala.reflect
 import scala.scalanative.reflect.{Reflect => ScalaNativeReflect}
 
 object Reflect {
+
   /** Reflectively looks up a loadable module class.
    *
    *  A module class is the technical term referring to the class of a Scala

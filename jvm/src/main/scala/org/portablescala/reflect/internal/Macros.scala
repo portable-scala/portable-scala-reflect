@@ -9,6 +9,7 @@ import org.portablescala.reflect._
  * https://github.com/xeno-by/sbt-example-paradise210/issues/1#issuecomment-20996354
  */
 object Macros {
+
   /** Magic to get cross-compiling access to `blackbox.Context` with a fallback
    *  on `macros.Context`, without deprecation warning in any Scala version.
    */
@@ -16,10 +17,12 @@ object Macros {
     object Scope1 {
       object blackbox
     }
+
     import Scope1._
 
     object Scope2 {
       import scala.reflect.macros._
+
       object Inner {
         import blackbox._
         type BlackboxContext = Context

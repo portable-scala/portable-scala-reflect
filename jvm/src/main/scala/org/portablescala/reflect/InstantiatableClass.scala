@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException
  *    The `java.lang.Class[_]` representing the class.
  */
 final class InstantiatableClass private[reflect] (val runtimeClass: Class[_]) {
+
   /** A list of the public constructors declared in this class. */
   val declaredConstructors: List[InvokableConstructor] =
     runtimeClass.getConstructors().map(new InvokableConstructor(_)).toList

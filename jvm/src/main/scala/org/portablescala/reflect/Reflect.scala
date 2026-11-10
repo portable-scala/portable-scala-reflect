@@ -124,9 +124,9 @@ object Reflect {
       clazz.getEnclosingClass() != clazz.getDeclaringClass()
 
     (clazz.getModifiers() & Modifier.ABSTRACT) == 0 &&
-    clazz.getConstructors().length > 0 &&
-    !isModuleClass(clazz) &&
-    !isLocalClass
+      clazz.getConstructors().length > 0 &&
+      !isModuleClass(clazz) &&
+      !isLocalClass
   }
 
   private def load(fqcn: String, loader: ClassLoader): Option[Class[_]] = {
